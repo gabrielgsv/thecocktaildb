@@ -15,24 +15,21 @@ export default () => {
 
   const categories = useSelector((state) => state.Category.categories);
   return (
-    <FlexCenter>
-      <Card
-        width="90vw"
-        height="90vh"
-        alignVertical="none"
-        alignHorizontal="center"
-      >
-        {categories &&
-          categories.map((category) => (
-            <Link to={`/category?drink=${category.strCategory}`}>
-              <AntCard>
-                <FlexCenter style={{ width: "100%", height: "100%" }}>
-                  <h2>{category.strCategory}</h2>
-                </FlexCenter>
-              </AntCard>
-            </Link>
-          ))}
-      </Card>
-    </FlexCenter>
+    <>
+      {categories &&
+        categories.map((category) => (
+          <Link
+            to={`/list-by-category?drink=${category.strCategory}`}
+            style={{ margin: 20 }}
+          >
+            <AntCard>
+              <FlexCenter style={{ width: "100%", height: "100%" }}>
+                <h2>{category.strCategory}</h2>
+              </FlexCenter>
+            </AntCard>
+          </Link>
+        ))}
+      ;
+    </>
   );
 };

@@ -7,10 +7,8 @@ export const AntCard = (props) => {
   const CardStyle = styled(Card)`
     border-radius: 15px;
     border: 1px solid #b5b5b5;
-    margin: 20px;
     width: 200px;
     height: 130px;
-    display: flex;
     cursor: pointer;
     :hover {
       border: 1px solid #b5b5b5;
