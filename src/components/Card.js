@@ -9,10 +9,10 @@ export const Card = (props) => {
     box-shadow: 0px 0px 85px -14px rgba(0, 0, 0, 0.57);
     display: flex;
     flex-wrap: wrap;
-    height: ${props.height || "auto"};
-    width: ${props.width || "auto"};
-    flex-direction: ${props.direction || "row"};
-    align-items: ${props.alignVertical || "center"};
+    overflow: auto;
+    height: ${props.height || "95vh"};
+    width: ${props.width || "95vw"};
+    align-content: flex-start;
     justify-content: ${props.alignHorizontal || "center"};
   `;
 
