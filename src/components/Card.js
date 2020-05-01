@@ -6,12 +6,14 @@ export const Card = (props) => {
   const CardStyle = styled.div`
     padding: 20px;
     border-radius: 30px;
-    box-shadow: 0px 0px 85px -14px rgba(0,0,0,0.57);
+    box-shadow: 0px 0px 85px -14px rgba(0, 0, 0, 0.57);
     display: flex;
+    flex-wrap: wrap;
     height: ${props.height || "auto"};
     width: ${props.width || "auto"};
     flex-direction: ${props.direction || "row"};
-    align-items: ${props.align || "center"};
+    align-items: ${props.alignVertical || "center"};
+    justify-content: ${props.alignHorizontal || "center"};
   `;
 
   return (
@@ -22,8 +24,10 @@ export const Card = (props) => {
 };
 
 Card.propTypes = {
+  alignHorizontal: PropTypes.string,
+  alignVertical: PropTypes.string,
   children: PropTypes.any,
   direction: PropTypes.string,
   height: PropTypes.string,
-  width: PropTypes.string
+  width: PropTypes.string,
 };
