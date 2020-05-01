@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
-import { Card } from "../components/Card";
 import { AntCard } from "../components/AntCard";
 import { FlexCenter } from "../components/Flex";
 import { useDispatch, useSelector } from "react-redux";
 import { getCategories } from "../store/actions/category";
 import { Link } from "react-router-dom";
+import { Skeleton } from "antd";
 
 export default () => {
   const dispatch = useDispatch();
@@ -14,8 +14,9 @@ export default () => {
   }, []);
 
   const categories = useSelector((state) => state.Category.categories);
+  const loading = useSelector((state) => state.Category.loading);
   return (
-    <>
+    <Skeleton active avatar paragraph={{ rows: 10 }} loading={loading}>
       {categories &&
         categories.map((category) => (
           <Link
@@ -29,7 +30,6 @@ export default () => {
             </AntCard>
           </Link>
         ))}
-      ;
-    </>
+    </Skeleton>
   );
 };
