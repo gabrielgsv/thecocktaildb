@@ -1,16 +1,16 @@
 import axios from "axios"
 
-export const getDrinks = (category) => {
+export const search = (name) => {
   return (dispatch) => {
     dispatch({
       type: "Loading",
       loading: true
     })
-    axios.get(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${category}`)
+    axios.get(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${name}`)
       .then(res => {
         dispatch({
-          type: "GET_DRINKS",
-          drinks: res.data.drinks
+          type: "SEARCH_DRINK",
+          drink: res.data.drinks
         })
         dispatch({
           type: "Loading",
@@ -24,5 +24,13 @@ export const getDrinks = (category) => {
           loading: false
         })
       })
+  }
+}
+
+export const removeSearch = () => {
+  return (dispatch) => {
+    dispatch({
+      type: "REMOVE_SEARCH"
+    })
   }
 }

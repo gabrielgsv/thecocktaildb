@@ -5,6 +5,11 @@ const category = (state = {}, action) => {
         ...state,
         categories: action.categories,
       };
+    case "Loading":
+      return {
+        ...state,
+        loading: action.loading,
+      };
     default:
       return state;
   }

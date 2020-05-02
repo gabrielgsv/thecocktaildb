@@ -1,26 +1,16 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { FlexCenter } from "../components/Flex";
 import { AntCard } from "../components/AntCard";
-import { useDispatch, useSelector } from "react-redux";
-import { getDrinks } from "../store/actions/drinksByCategory";
-import { useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Skeleton } from "antd";
+import { useDispatch } from "react-redux";
+import { removeSearch } from "../store/actions/search";
 
-export default () => {
-  const drinks = useSelector((state) => state.DrinksByCategory.drinks);
-  const loading = useSelector((state) => state.DrinksByCategory.loading);
-
-  function useQuery() {
-    return new URLSearchParams(useLocation().search);
-  }
-  let query = useQuery();
-
+export default (props) => {
+  const loading = useSelector((state) => state.Search.loading);
+  const drinks = props.drinks;
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getDrinks(query.get("drink")));
-  }, []);
-
   return (
     <Skeleton active avatar paragraph={{ rows: 10 }} loading={loading}>
       {drinks &&
@@ -29,6 +19,7 @@ export default () => {
             to={`/drink?name=${drink.idDrink}`}
             style={{ margin: 20 }}
             key={drink.idDrink}
+            onClick={() => dispatch(removeSearch())}
           >
             <AntCard
               title={drink.strDrink}

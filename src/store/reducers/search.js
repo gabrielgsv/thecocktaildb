@@ -1,10 +1,12 @@
-const drinksByCategory = (state = {}, action) => {
+const drink = (state = {}, action) => {
   switch (action.type) {
-    case "GET_DRINKS":
+    case "SEARCH_DRINK":
       return {
         ...state,
-        drinks: action.drinks,
+        drink: action.drink,
       };
+    case "REMOVE_SEARCH":
+      return {};
     case "Loading":
       return {
         ...state,
@@ -15,4 +17,4 @@ const drinksByCategory = (state = {}, action) => {
   }
 };
 
-export default drinksByCategory;
+export default drink;

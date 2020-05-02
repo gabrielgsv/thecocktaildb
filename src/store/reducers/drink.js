@@ -1,9 +1,9 @@
-const drinksByCategory = (state = {}, action) => {
+const drink = (state = {}, action) => {
   switch (action.type) {
-    case "GET_DRINKS":
+    case "GET_DRINK":
       return {
         ...state,
-        drinks: action.drinks,
+        drink: action.drink,
       };
     case "Loading":
       return {
@@ -15,4 +15,4 @@ const drinksByCategory = (state = {}, action) => {
   }
 };
 
-export default drinksByCategory;
+export default drink;
