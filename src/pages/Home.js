@@ -22,6 +22,7 @@ export default () => {
           <Link
             to={`/list-by-category?drink=${category.strCategory}`}
             style={{ margin: 20 }}
+            key={category.strCategory}
           >
             <AntCard>
               <FlexCenter style={{ width: "100%", height: "100%" }}>
