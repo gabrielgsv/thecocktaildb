@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { Skeleton} from "antd";
+import { Skeleton } from "antd";
 import { useLocation } from "react-router-dom";
 import { getDrink } from "../store/actions/drink";
 import { FlexCenter } from "../components/Flex";
@@ -66,15 +66,17 @@ const Drink = () => {
             </FlexMiddle>
 
             <FlexMiddle style={{ justifyContent: "flex-start", width: 300 }}>
-              <h2 style={{ fontSize: 25 }}>Ingredient: </h2>
-              {IngredientCount().map((number) => (
-                <p style={{ fontSize: 20 }} key={number}>
-                  {drink["strMeasure" + number]}
-                  {drink["strIngredient" + number]}
-                </p>
-              ))}
+              <div>
+                <h2 style={{ fontSize: 25 }}>Ingredient: </h2>
+                {IngredientCount().map((number) => (
+                  <p style={{ fontSize: 20 }} key={number}>
+                    {drink["strMeasure" + number]}
+                    {drink["strIngredient" + number]}
+                  </p>
+                ))}
+              </div>
 
-              <div style={{ marginTop: 10 }}>
+              <div>
                 <h2 style={{ fontSize: 25 }}>Instructions: </h2>
                 <p style={{ fontSize: 20 }}>{drink.strInstructions}</p>
               </div>
