@@ -1,29 +1,30 @@
-import axios from "axios"
+import api from '../../utils/api'
+import alert from '../../utils/alerts'
 
-export const getCategories = () => {
+export const getCategories = (callbackLoad) => {
   return (dispatch) => {
     dispatch({
-      type: "Loading",
-      loading: true
-    })
-    axios.get("https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list")
-      .then(res => {
+      type: 'Loading',
+      loading: true,
+    });
+    api
+      .get('list.php?c=list')
+      .then((res) => {
         dispatch({
-          type: "GET_CATEGORIES",
-          categories: res.data.drinks
-        })
+          type: 'GET_CATEGORIES',
+          categories: res.data.drinks,
+        });
 
-        dispatch({
-          type: "Loading",
-          loading: false
-        })
+        callbackLoad()
       })
-      .catch(err => {
-        console.log(err)
+      .catch((err) => {
+        console.log(err);
+        alert()
+        callbackLoad()
         dispatch({
-          type: "Loading",
-          loading: false
-        })
-      })
-  }
-}
+          type: 'Loading',
+          loading: false,
+        });
+      });
+  };
+};

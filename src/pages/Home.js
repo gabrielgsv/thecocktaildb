@@ -1,22 +1,23 @@
-import React, { useEffect } from "react";
-import { AntCard } from "../components/AntCard";
-import { FlexCenter } from "../components/Flex";
-import { useDispatch, useSelector } from "react-redux";
-import { getCategories } from "../store/actions/category";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { Skeleton } from "antd";
+import AntCard from "../components/AntCard";
+import { FlexCenter } from "../components/Flex";
+import { getCategories } from "../store/actions/category";
 
-export default () => {
+const Home = () => {
   const dispatch = useDispatch();
 
+  const [load, setLoad] = useState(true);
+
   useEffect(() => {
-    dispatch(getCategories());
+    dispatch(getCategories(() => setLoad(false)));
   }, []);
 
   const categories = useSelector((state) => state.Category.categories);
-  const loading = useSelector((state) => state.Category.loading);
   return (
-    <Skeleton active avatar paragraph={{ rows: 10 }} loading={loading}>
+    <Skeleton active avatar paragraph={{ rows: 10 }} loading={load}>
       {categories &&
         categories.map((category) => (
           <Link
@@ -34,3 +35,5 @@ export default () => {
     </Skeleton>
   );
 };
+
+export default Home;
