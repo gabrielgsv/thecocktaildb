@@ -1,18 +1,17 @@
-import React from "react";
-import PropTypes from "prop-types";
-import styled from "styled-components";
-import { Card } from "antd";
+import React from 'react';
+import styled from 'styled-components';
+import { Card } from 'antd';
 
-export const AntCard = (props) => {
+const AntCard = (props) => {
   const CardStyle = styled(Card)`
-    border-radius: 15px;
+    border-radius: 10px;
     border: 1px solid #b5b5b5;
     width: 200px;
     height: 130px;
     cursor: pointer;
     :hover {
       border: 1px solid #b5b5b5;
-      box-shadow: 0px 0px 65px -14px #002766;
+      box-shadow: 0px 0px 25px -14px #002766;
     }
   `;
 
@@ -23,6 +22,4 @@ export const AntCard = (props) => {
   );
 };
 
-AntCard.propTypes = {
-  children: PropTypes.any,
-};
+export default AntCard;

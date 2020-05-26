@@ -1,13 +1,13 @@
 const drink = (state = {}, action) => {
   switch (action.type) {
-    case "SEARCH_DRINK":
+    case 'SEARCH_DRINK':
       return {
         ...state,
         drink: action.drink,
       };
-    case "REMOVE_SEARCH":
+    case 'REMOVE_SEARCH':
       return {};
-    case "Loading":
+    case 'Loading':
       return {
         ...state,
         loading: action.loading,

@@ -1,28 +1,28 @@
-import React, { useEffect } from "react";
-import { FlexCenter } from "../components/Flex";
-import { AntCard } from "../components/AntCard";
-import { useDispatch, useSelector } from "react-redux";
-import { getDrinks } from "../store/actions/drinksByCategory";
-import { useLocation } from "react-router-dom";
-import { Link } from "react-router-dom";
-import { Skeleton } from "antd";
+import React, {useState ,useEffect } from 'react';
+import { Skeleton } from 'antd';
+import { Link, useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { getDrinks } from '../store/actions/drinksByCategory';
+import { FlexCenter } from '../components/Flex';
+import AntCard from '../components/AntCard';
 
-export default () => {
+const DrinksByCategory = () => {
   const drinks = useSelector((state) => state.DrinksByCategory.drinks);
-  const loading = useSelector((state) => state.DrinksByCategory.loading);
+  const [load, setLoad] = useState(true);
 
   function useQuery() {
     return new URLSearchParams(useLocation().search);
   }
-  let query = useQuery();
+
+  const query = useQuery();
 
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getDrinks(query.get("drink")));
+    dispatch(getDrinks(query.get('drink'), () => setLoad(false)));
   }, []);
 
   return (
-    <Skeleton active avatar paragraph={{ rows: 10 }} loading={loading}>
+    <Skeleton active avatar paragraph={{ rows: 10 }} loading={load}>
       {drinks &&
         drinks.map((drink) => (
           <Link
@@ -33,12 +33,13 @@ export default () => {
             <AntCard
               title={drink.strDrink}
               key={drink.idDrink}
-              style={{ height: 300 }}
+              style={{ height: 300, width: 250 }}
             >
-              <FlexCenter style={{ width: "100%", height: "100%" }}>
+              <FlexCenter style={{ width: '100%', height: '100%' }}>
                 <img
                   src={drink.strDrinkThumb}
-                  style={{ width: "100%", borderRadius: 15 }}
+                  alt="drinkImage"
+                  style={{ width: 200, borderRadius: 15 }}
                 />
               </FlexCenter>
             </AntCard>
@@ -47,3 +48,5 @@ export default () => {
     </Skeleton>
   );
 };
+
+export default DrinksByCategory

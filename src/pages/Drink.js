@@ -1,19 +1,20 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import styled from "styled-components";
+import { Skeleton} from "antd";
 import { useLocation } from "react-router-dom";
 import { getDrink } from "../store/actions/drink";
-import styled from "styled-components";
 import { FlexCenter } from "../components/Flex";
-import { Skeleton } from "antd";
 
-export default () => {
+const Drink = () => {
   const drink = useSelector((state) => {
     if (state.Drink.drink) {
       return state.Drink.drink[0];
     }
   });
 
-  const loading = useSelector((state) => state.Drink.loading);
+  const [load, setLoad] = useState(true);
+
   function useQuery() {
     return new URLSearchParams(useLocation().search);
   }
@@ -22,7 +23,7 @@ export default () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getDrink(query.get("name")));
+    dispatch(getDrink(query.get("name"), () => setLoad(false)));
   }, []);
 
   const FlexMiddle = styled.div`
@@ -41,7 +42,7 @@ export default () => {
   };
 
   return (
-    <Skeleton active avatar paragraph={{ rows: 10 }} loading={loading}>
+    <Skeleton active avatar paragraph={{ rows: 10 }} loading={load}>
       {drink && (
         <>
           <FlexCenter style={{ height: 50, marginBottom: 70 }}>
@@ -59,22 +60,23 @@ export default () => {
             <FlexMiddle style={{ width: 300 }}>
               <img
                 src={drink.strDrinkThumb}
+                alt="drinkImage"
                 style={{ width: 300, height: "auto", borderRadius: 15 }}
               />
             </FlexMiddle>
 
             <FlexMiddle style={{ justifyContent: "flex-start", width: 300 }}>
-              <h2 style={{ fontSize: 25 }}>Instructions: </h2>
-              <p style={{ fontSize: 20 }}>{drink.strInstructions}</p>
+              <h2 style={{ fontSize: 25 }}>Ingredient: </h2>
+              {IngredientCount().map((number) => (
+                <p style={{ fontSize: 20 }} key={number}>
+                  {drink["strMeasure" + number]}
+                  {drink["strIngredient" + number]}
+                </p>
+              ))}
 
-              <div style={{ marginTop: 30 }}>
-                <h2 style={{ fontSize: 25 }}>Ingredient: </h2>
-                {IngredientCount().map((number) => (
-                  <p style={{ fontSize: 20 }} key={number}>
-                    {drink["strMeasure" + number]}{" "}
-                    {drink["strIngredient" + number]}
-                  </p>
-                ))}
+              <div style={{ marginTop: 10 }}>
+                <h2 style={{ fontSize: 25 }}>Instructions: </h2>
+                <p style={{ fontSize: 20 }}>{drink.strInstructions}</p>
               </div>
             </FlexMiddle>
           </FlexMiddle>
@@ -83,3 +85,5 @@ export default () => {
     </Skeleton>
   );
 };
+
+export default Drink;

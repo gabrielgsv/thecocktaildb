@@ -1,11 +1,11 @@
 const drinksByCategory = (state = {}, action) => {
   switch (action.type) {
-    case "GET_DRINKS":
+    case 'GET_DRINKS':
       return {
         ...state,
         drinks: action.drinks,
       };
-    case "Loading":
+    case 'Loading':
       return {
         ...state,
         loading: action.loading,

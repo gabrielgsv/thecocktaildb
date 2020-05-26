@@ -1,18 +1,24 @@
-import React from "react";
-import { FlexCenter } from "../components/Flex";
-import { AntCard } from "../components/AntCard";
-import { useSelector } from "react-redux";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Skeleton } from "antd";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { removeSearch } from "../store/actions/search";
+import { FlexCenter } from "../components/Flex";
+import AntCard from "../components/AntCard";
+import { search } from "../store/actions/search";
 
-export default (props) => {
-  const loading = useSelector((state) => state.Search.loading);
-  const drinks = props.drinks;
+const SearchPage = (props) => {
+  const [load, setLoad] = useState(true);
+  
   const dispatch = useDispatch();
+  const searchValue = props.location.state.searchValue;
+  useEffect(() => {
+    dispatch(search(searchValue, () => setLoad(false)));
+  }, []);
+  const drinks = useSelector((state) => state.Search.drink);
+
   return (
-    <Skeleton active avatar paragraph={{ rows: 10 }} loading={loading}>
+    <Skeleton active avatar paragraph={{ rows: 10 }} loading={load}>
       {drinks &&
         drinks.map((drink) => (
           <Link
@@ -29,6 +35,7 @@ export default (props) => {
               <FlexCenter style={{ width: "100%", height: "100%" }}>
                 <img
                   src={drink.strDrinkThumb}
+                  alt="drinkImage"
                   style={{ width: "100%", borderRadius: 15 }}
                 />
               </FlexCenter>
@@ -38,3 +45,5 @@ export default (props) => {
     </Skeleton>
   );
 };
+
+export default SearchPage;

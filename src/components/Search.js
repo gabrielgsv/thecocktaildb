@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { Input, Button } from "antd";
 import { HomeOutlined } from "@ant-design/icons";
-import { useDispatch, useSelector } from "react-redux";
-import { search, removeSearch } from "../store/actions/search";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { removeSearch } from "../store/actions/search";
+import history from "../history";
 
-export default () => {
+const Search = () => {
   const { Search } = Input;
   const dispatch = useDispatch();
   const [textSearch, setTextSearch] = useState("");
@@ -13,6 +14,12 @@ export default () => {
   const searchDrink = useSelector((state) => state.Search.drink);
   const home = () => {
     if (searchDrink) dispatch(removeSearch());
+  };
+
+  const searchAction = (value) => {
+    if (value.length > 0) {
+      history.push("/search", {searchValue: value});
+    }
   };
   return (
     <>
@@ -39,7 +46,7 @@ export default () => {
           style={{ width: 400, border: "1px solid #b5b5b5" }}
           value={textSearch}
           onChange={(e) => setTextSearch(e.target.value)}
-          onSearch={(value) => dispatch(search(value))}
+          onSearch={(value) => searchAction(value)}
           enterButton
           size="large"
         />
@@ -48,3 +55,5 @@ export default () => {
     </>
   );
 };
+
+export default Search

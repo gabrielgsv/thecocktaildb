@@ -1,28 +1,29 @@
-import axios from "axios"
+import api from '../../utils/api'
+import alert from '../../utils/alerts'
 
-export const getDrink = (id) => {
+export const getDrink = (id, callbackLoad) => {
   return (dispatch) => {
     dispatch({
-      type: "Loading",
-      loading: true
-    })
-    axios.get(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`)
-      .then(res => {
+      type: 'Loading',
+      loading: true,
+    });
+    api
+      .get(`lookup.php?i=${id}`)
+      .then((res) => {
         dispatch({
-          type: "GET_DRINK",
-          drink: res.data.drinks
-        })
-        dispatch({
-          type: "Loading",
-          loading: false
-        })
+          type: 'GET_DRINK',
+          drink: res.data.drinks,
+        });
+        callbackLoad()
       })
-      .catch(err => {
-        console.log(err)
+      .catch((err) => {
+        console.log(err);
+        alert()
+        callbackLoad()
         dispatch({
-          type: "Loading",
-          loading: false
-        })
-      })
-  }
-}
+          type: 'Loading',
+          loading: false,
+        });
+      });
+  };
+};
