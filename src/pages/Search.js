@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Skeleton } from "antd";
+import { Skeleton, Alert } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { removeSearch } from "../store/actions/search";
 import { FlexCenter } from "../components/Flex";
@@ -9,17 +9,22 @@ import { search } from "../store/actions/search";
 
 const SearchPage = (props) => {
   const [load, setLoad] = useState(true);
-  
+
   const dispatch = useDispatch();
   const searchValue = props.location.state.searchValue;
+
   useEffect(() => {
-    dispatch(search(searchValue, () => setLoad(false)));
-  }, []);
+    if (searchValue) {
+      setLoad(true);
+      dispatch(search(searchValue, () => setLoad(false)));
+    }
+  }, [searchValue]);
+
   const drinks = useSelector((state) => state.Search.drink);
 
   return (
     <Skeleton active avatar paragraph={{ rows: 10 }} loading={load}>
-      {drinks &&
+      {drinks ? (
         drinks.map((drink) => (
           <Link
             to={`/drink?name=${drink.idDrink}`}
@@ -41,7 +46,16 @@ const SearchPage = (props) => {
               </FlexCenter>
             </AntCard>
           </Link>
-        ))}
+        ))
+      ) : (
+        <Alert
+          message="Pesquisa não encontrada"
+          description="Por favor tente novamente."
+          type="info"
+          showIcon
+          style={{ marginTop: 50 }}
+        />
+      )}
     </Skeleton>
   );
 };
